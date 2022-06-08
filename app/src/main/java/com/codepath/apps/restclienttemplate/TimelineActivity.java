@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -58,14 +59,34 @@ public class TimelineActivity extends AppCompatActivity {
         return true;
     }
 
+
+    void onLogoutButton(){
+        // forget who's logged in
+        TwitterApplication.getRestClient(this).clearAccessToken();
+
+        // navigate backwards to Login screen
+//        Intent i = new Intent(this, LoginActivity.class);
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work
+//        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // same as above
+//        startActivity(i);
+        finish();
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.compose){
-            Toast.makeText(this,"Compose",Toast.LENGTH_SHORT).show();
+
+
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
+
+
             return true;
 
         }
         if(item.getItemId() == R.id.logOut){
+            onLogoutButton();
             Toast.makeText(this,"logged out",Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -73,6 +94,8 @@ public class TimelineActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void populateHomeTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
