@@ -112,7 +112,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
 
-    void onLogoutButton(){
+    public void onLogoutButton(){
         // forget who's logged in
         TwitterApplication.getRestClient(this).clearAccessToken();
 
