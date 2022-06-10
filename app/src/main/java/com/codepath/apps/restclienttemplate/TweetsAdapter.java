@@ -77,6 +77,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         }
 
         public String getRelativeTimeAgo(String rawJsonDate) {
+            //function gets the created at string and modifiies it so it would be displayed
+            // in a specific way to the user
+
             String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
             SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
             sf.setLenient(true);
@@ -105,7 +108,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 Log.i("TweetAdapter", "getRelativeTimeAgo failed");
                 e.printStackTrace();
             }
-
             return "";
         }
 
@@ -117,6 +119,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText("@"+tweet.user.screenName);
             tvName.setText(tweet.user.name);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+
+            // mediaUrl does not always have an image link, in other to handle this exception
+            //the following algorithm was employed
+
             if(!tweet.mediaUrl.equals("")){
                 Glide.with(context).load(tweet.mediaUrl).into(ivMediaUrl);
             }
