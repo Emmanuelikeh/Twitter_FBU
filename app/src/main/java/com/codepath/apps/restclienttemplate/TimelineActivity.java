@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -125,18 +126,14 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.compose){
-
-
+    public void onTap(View v){
             Intent intent = new Intent(this, ComposeActivity.class);
             startActivityForResult(intent,REQUEST_CODE);
 
+    }
 
-            return true;
-
-        }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.logOut){
             onLogoutButton();
             Toast.makeText(this,"logged out",Toast.LENGTH_SHORT).show();

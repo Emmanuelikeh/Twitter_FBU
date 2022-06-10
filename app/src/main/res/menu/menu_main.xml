@@ -7,9 +7,5 @@
         android:icon="@android:drawable/ic_menu_set_as"
         android:title="Log out"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/compose"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="Compose"
-        app:showAsAction="always" />
+
 </menu>

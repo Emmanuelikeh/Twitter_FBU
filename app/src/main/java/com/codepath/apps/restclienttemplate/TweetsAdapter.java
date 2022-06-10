@@ -56,6 +56,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvScreenName;
         ImageView ivMediaUrl;
         TextView tvTimeStamp;
+        TextView tvName;
 
         private static final int SECOND_MILLIS = 1000;
         private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -70,6 +71,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             ivMediaUrl = itemView.findViewById(R.id.ivMediaUrl);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
+            tvName = itemView.findViewById(R.id.tvName);
 
 
         }
@@ -112,7 +114,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvTimeStamp.setText(getRelativeTimeAgo(tweet.createdAt));
-            tvScreenName.setText(tweet.user.screenName);
+            tvScreenName.setText("@"+tweet.user.screenName);
+            tvName.setText(tweet.user.name);
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
             if(!tweet.mediaUrl.equals("")){
                 Glide.with(context).load(tweet.mediaUrl).into(ivMediaUrl);
