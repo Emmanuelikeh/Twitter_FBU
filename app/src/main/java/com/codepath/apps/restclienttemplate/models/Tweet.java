@@ -14,7 +14,7 @@ public class Tweet {
     public String body;
     public String createdAt;
     public User user;
-    public String mediaUrl;
+    public String mediaUrl = "";
 
     public Tweet() {}
 

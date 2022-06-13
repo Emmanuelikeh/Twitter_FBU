@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.restclienttemplate.databinding.ItemTweetBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.text.ParseException;
@@ -34,8 +35,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
-        return new ViewHolder(view);
+//        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemTweetBinding itemTweetBinding = ItemTweetBinding.inflate(layoutInflater,parent,false);
+        return new ViewHolder(itemTweetBinding);
     }
 
     @Override
@@ -51,12 +54,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView ivProfileImage;
-        TextView tvBody;
-        TextView tvScreenName;
-        ImageView ivMediaUrl;
-        TextView tvTimeStamp;
-        TextView tvName;
+//        ImageView ivProfileImage;
+//        TextView tvBody;
+//        TextView tvScreenName;
+//        ImageView ivMediaUrl;
+//        TextView tvTimeStamp;
+//        TextView tvName;
+
+        ItemTweetBinding itemTweetBinding;
 
         private static final int SECOND_MILLIS = 1000;
         private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -64,14 +69,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
-            tvBody = itemView.findViewById(R.id.tvBody);
-            tvScreenName = itemView.findViewById(R.id.tvScreenName);
-            ivMediaUrl = itemView.findViewById(R.id.ivMediaUrl);
-            tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
-            tvName = itemView.findViewById(R.id.tvName);
+        public ViewHolder(@NonNull ItemTweetBinding itemTweetBinding) {
+            super(itemTweetBinding.getRoot());
+            this.itemTweetBinding = itemTweetBinding;
+//
+//            ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+//            tvBody = itemView.findViewById(R.id.tvBody);
+//            tvScreenName = itemView.findViewById(R.id.tvScreenName);
+//            ivMediaUrl = itemView.findViewById(R.id.ivMediaUrl);
+//            tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
+//            tvName = itemView.findViewById(R.id.tvName);
 
 
         }
@@ -114,20 +121,25 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
 
         public void bind(Tweet tweet) {
-            tvBody.setText(tweet.body);
-            tvTimeStamp.setText(getRelativeTimeAgo(tweet.createdAt));
-            tvScreenName.setText("@"+tweet.user.screenName);
-            tvName.setText(tweet.user.name);
-            Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            itemTweetBinding.tvBody.setText(tweet.body);
+            itemTweetBinding.tvTimeStamp.setText(getRelativeTimeAgo(tweet.createdAt));
+            itemTweetBinding.tvScreenName.setText("@"+ tweet.user.screenName);
+            itemTweetBinding.tvName.setText(tweet.user.name);
+            Glide.with(context).load(tweet.user.profileImageUrl).into(itemTweetBinding.ivProfileImage);
+//            tvBody.setText(tweet.body);
+//            tvTimeStamp.setText(getRelativeTimeAgo(tweet.createdAt));
+//            tvScreenName.setText("@"+tweet.user.screenName);
+//            tvName.setText(tweet.user.name);
+
 
             // mediaUrl does not always have an image link, in other to handle this exception
             //the following algorithm was employed
 
             if(!tweet.mediaUrl.equals("")){
-                Glide.with(context).load(tweet.mediaUrl).into(ivMediaUrl);
+                Glide.with(context).load(tweet.mediaUrl).into(itemTweetBinding.ivMediaUrl);
             }
             else{
-                ivMediaUrl.setVisibility(View.GONE);
+                itemTweetBinding.ivMediaUrl.setVisibility(View.GONE);
             }
         }
     }

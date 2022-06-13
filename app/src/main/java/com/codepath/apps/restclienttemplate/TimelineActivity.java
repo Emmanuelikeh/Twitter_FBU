@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -37,6 +38,8 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
 
+    ActivityTimelineBinding activityTimelineBinding;
+
 
 
     public static final String TAG = "TimelineActivity";
@@ -47,16 +50,22 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
+//        setContentView(R.layout.activity_timeline);
+        activityTimelineBinding = ActivityTimelineBinding.inflate(getLayoutInflater());
+        setContentView(activityTimelineBinding.getRoot());
+        tweets = new ArrayList<>();
+        adapter = new TweetsAdapter(this,tweets);
+        activityTimelineBinding.rvTweets.setAdapter(adapter);
+        activityTimelineBinding.rvTweets.setLayoutManager(new LinearLayoutManager(this));
 
         client = TwitterApplication.getRestClient(this);
 
-        rvTweets = findViewById(R.id.rvTweets);
-        tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this,tweets);
-
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-        rvTweets.setAdapter(adapter);
+//        rvTweets = findViewById(R.id.rvTweets);
+//
+//
+//
+//        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+//        rvTweets.setAdapter(adapter);
 
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
